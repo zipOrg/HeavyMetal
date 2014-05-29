@@ -219,6 +219,7 @@ pip-log.txt
 #Unity
 ###
 Library
+Temp
 *.csproj
 *.sln
 *.userprefs
