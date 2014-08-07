@@ -95,8 +95,20 @@ public class Player : Actor  {
 	}
 
 	private void Jump(){
-		rigidbody.AddForce(Vector3.up*1000.0f,ForceMode.Impulse);
+		//rigidbody.AddForce(Vector3.up*1000.0f,ForceMode.Impulse);
+		StartCoroutine(JumpCoroutine());
+	}
 
+	private IEnumerator JumpCoroutine(){
+		float initialJumpForce = 4000.0f;
+
+		while(Input.GetButton("Jump")){
+
+			rigidbody.AddForce(Vector3.up * initialJumpForce);
+			initialJumpForce *= 0.9f;
+
+			yield return new WaitForEndOfFrame();
+		}
 	}
 
 
