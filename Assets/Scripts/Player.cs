@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+//git commit
 public class Player : Actor  {
 
 
