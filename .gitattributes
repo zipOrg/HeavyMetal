@@ -9,6 +9,8 @@
 *.fsproj merge=union
 *.dbproj merge=union
 
+
+
 # Standard to msysgit
 *.doc	 diff=astextplain
 *.DOC	 diff=astextplain
@@ -20,3 +22,6 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+#UNITY
+*.unityproj

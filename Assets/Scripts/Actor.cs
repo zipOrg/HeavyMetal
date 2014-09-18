@@ -2,14 +2,21 @@
 using System.Collections;
 
 public class Actor : BaseScript {
+
+	public enum EnumDirection{LEFT, RIGHT, IDLE};
+
+
 	public float actorSpeed;
 
+
+	protected EnumDirection currentDirection;
 
 	protected CapsuleCollider capsuleCollider;
 
 
 	protected void Awake(){
 		capsuleCollider = (CapsuleCollider)collider;
+		currentDirection = EnumDirection.IDLE;
 	}
 
 	protected bool IsGrounded(){
@@ -24,6 +31,10 @@ public class Actor : BaseScript {
 		Debug.DrawRay(transform.position, direction);
 		Debug.DrawRay(transform.position - Vector3.up * 0.6f,direction);
 		return true;
+	}
+
+	protected virtual void setCurrentDirection(EnumDirection newDirection){
+		currentDirection = newDirection;
 	}
 
 }
