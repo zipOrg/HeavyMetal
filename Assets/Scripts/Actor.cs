@@ -7,6 +7,7 @@ public class Actor : BaseScript {
 
 
 	public float actorSpeed;
+	public float skinWidth;
 
 	protected CapsuleCollider capsuleCollider;
 
@@ -18,14 +19,14 @@ public class Actor : BaseScript {
 		return Physics.Linecast(transform.position + capsuleCollider.center ,(transform.position + capsuleCollider.center) - (Vector3.up * capsuleCollider.height/2.0f));
 	}
 
-	protected bool CanMoveInDirection(Vector3 direction){
+	protected bool IsObstacleInDirection(Vector3 direction){
 		Ray topRay = new Ray(transform.position + capsuleCollider.center + Vector3.up * 0.6f,direction);
 		Ray midRay = new Ray(transform.position + capsuleCollider.center, direction);
 		Ray bottomRay = new Ray(transform.position + capsuleCollider.center - Vector3.up * 0.6f,direction);
 		Debug.DrawRay(transform.position + capsuleCollider.center + Vector3.up * 0.6f,direction);
 		Debug.DrawRay(transform.position + capsuleCollider.center, direction);
 		Debug.DrawRay(transform.position + capsuleCollider.center - Vector3.up * 0.6f,direction);
-		float length = capsuleCollider.radius;
+		float length = capsuleCollider.radius + skinWidth;
 		return !Physics.Raycast(topRay,length) && !Physics.Raycast(midRay,length) && !Physics.Raycast(bottomRay,length);
 	}
 

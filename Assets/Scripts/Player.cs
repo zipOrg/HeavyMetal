@@ -35,10 +35,13 @@ public class Player : Actor  {
 	private void Update () {
 		HandleInput();
 		SmoothHorizontalAxis();
+		ApplyMovementConstraints();
 		CalculateHorizontalMovement();
 		RotateCharacter();
 		HandleAnimations();
 	}
+
+
 
 	private void HandleAnimations(){
 		playerAnimator.SetFloat("Blend",Mathf.Abs(rigidbody.velocity.x)/actorSpeed);
@@ -68,27 +71,28 @@ public class Player : Actor  {
 		else{
 			smoothHorizontalAxis = inputHorizontalAxis;
 		}
+
+
+
+	}
+
+	private void ApplyMovementConstraints(){
+		if(!IsObstacleInDirection(new Vector3(smoothHorizontalAxis,0.0f,0.0f))){
+			smoothHorizontalAxis = 0.0f;
+		}
+
+		if(isAttacking){
+			smoothHorizontalAxis = 0.0f;
+		}
 	}
 
 	private void HandleInput(){
-		if(!isAttacking){
-			if(CanMoveInDirection(new Vector3(Input.GetAxisRaw("Horizontal"),0,0))){
-				inputHorizontalAxis = Input.GetAxisRaw("Horizontal");
-			}
-			else{
-				inputHorizontalAxis = 0.0f;
-				SetActorHorizontalVelocity(0.0f);
-			}
-		}
-		else{
-			inputHorizontalAxis = 0.0f;
-			SetActorHorizontalVelocity(0.0f);
-		}
 
+		inputHorizontalAxis = Input.GetAxisRaw("Horizontal");
 
 
 		if(Input.GetButtonDown("Jump")){
-			if(IsGrounded()){
+			if(IsGrounded() && !isAttacking){
 				Jump();
 			}
 		}
@@ -113,7 +117,7 @@ public class Player : Actor  {
 	}
 
 	private void ApplyHorizontalMovement(){
-		rigidbody.AddForce(movementDelta,ForceMode.VelocityChange);
+		rigidbody.AddForce(movementDelta,ForceMode.VelocityChange);	
 	}
 
 	private void Jump(){
